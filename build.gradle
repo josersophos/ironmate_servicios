@@ -1,0 +1,63 @@
+repositories {
+    jcenter()
+    mavenLocal()
+}
+buildscript {
+    repositories {
+        jcenter()
+        mavenCentral()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath("net.serenity-bdd:serenity-gradle-plugin:2.0.70")
+        classpath "gradle.plugin.com.github.sherter.google-java-format:google-java-format-gradle-plugin:0.8"
+        classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:3.1.1"
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'eclipse'
+apply plugin: 'net.serenity-bdd.aggregator'
+apply plugin: 'com.github.sherter.google-java-format'
+apply plugin: 'org.sonarqube'
+
+compileJava.options.encoding = "UTF-8"
+compileTestJava.options.encoding = "UTF-8"
+
+
+test {systemProperties = System.properties}
+
+sonarqube {
+    properties {
+        property "sonar.projectKey", "camillomurcia_serenity-screenplay-rest-assured"
+        property "sonar.organization", "camillomurcia"
+        property "sonar.host.url", "https://sonarcloud.io"
+    }
+}
+
+ext {
+    serenityCoreVersion = '3.3.4'
+    serenityCucumberVersion = '3.3.4'
+    junitVersion = '4.13.1'
+    assertJVersion = '3.22.0'
+    slf4jVersion = '1.7.36'
+    slf4jlog4j12Version = '1.7.36'
+}
+
+dependencies {
+    testImplementation "junit:junit:${junitVersion}"
+    testImplementation "org.assertj:assertj-core:${assertJVersion}"
+    testImplementation "org.slf4j:slf4j-log4j12:${slf4jlog4j12Version}"
+    implementation "net.serenity-bdd:serenity-core:${serenityCoreVersion}"
+    implementation "net.serenity-bdd:serenity-junit:${serenityCoreVersion}"
+    implementation "org.slf4j:slf4j-api:${slf4jVersion}"
+    implementation "net.serenity-bdd:serenity-screenplay:${serenityCoreVersion}"
+    implementation "net.serenity-bdd:serenity-cucumber:${serenityCucumberVersion}"
+    implementation "net.serenity-bdd:serenity-screenplay-rest:${serenityCoreVersion}"
+}
+
+
+gradle.startParameter.continueOnFailure = true
