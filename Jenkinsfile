@@ -1,6 +1,6 @@
 pipeline {
 
-    agent{label 'window'}
+    agent any
 
     tools {
         // Install the Gradle version.
