@@ -1,6 +1,11 @@
 pipeline {
     agent any
 
+    tools {
+        // Install the Gradle version.
+        gradle 'Gradle'
+    }
+
     stages {
         stage('Test') {
             steps {
