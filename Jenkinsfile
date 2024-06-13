@@ -11,7 +11,7 @@ pipeline {
         stage('Build') {
             steps {
                 // Get some code from a GitHub repository
-                git url: 'https://github.com/josersophos/ironmate_servicios.gitt', branch: 'main'
+                git url: 'https://github.com/josersophos/ironmate_servicios.git', branch: 'main'
 
                 // Run gradle.
                 bat "gradle clean test -Denvironment=stg aggregate"
