@@ -14,7 +14,7 @@ pipeline {
                 git url: 'https://github.com/josersophos/ironmate_servicios.git', branch: 'main'
 
                 // Run gradle.
-                sc "gradle clean test"
+                sh "gradle clean test"
             }
 			post {
 				always {
