@@ -1,5 +1,6 @@
 pipeline {
-    agent any
+
+    agent{label 'window'}
 
     tools {
         // Install the Gradle version.
@@ -7,18 +8,28 @@ pipeline {
     }
 
     stages {
-        stage('Test') {
+        stage('Build') {
             steps {
-                sh './gradlew clean test --no-daemon' //run a gradle task
-            }
+                // Get some code from a GitHub repository
+                git url: 'https://github.com/josersophos/ironmate_servicios.gitt', branch: 'main'
 
-            post {
-                // If Maven was able to run the tests, even if some of the test
-                // failed, record the test results and archive the jar file.
-                success {
-                   publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'target/site/serenity/', reportFiles: 'index.html', reportName: 'Serenity Report', reportTitles: '', useWrapperFileDirectly: true])
-                }
+                // Run gradle.
+                bat "gradle clean test -Denvironment=stg aggregate"
             }
+			post {
+				always {
+					publishHTML(
+						target: [
+							reportName : 'Serenity',
+							reportDir:   'target/site/serenity',
+							reportFiles: 'index.html',
+							keepAll:     true,
+							alwaysLinkToLastBuild: true,
+							allowMissing: false
+						]
+					)
+				}
+			}
         }
     }
 }
