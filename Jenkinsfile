@@ -3,7 +3,7 @@ pipeline {
 
     tools {
         // Install the Gradle version.
-        gradle 'Gradle'
+        gradle 'Gradle-8'
     }
 
     stages {
