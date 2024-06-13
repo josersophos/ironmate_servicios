@@ -1,10 +1,5 @@
 pipeline {
-    agent{label 'window'}
-
-    tools {
-        // Install the Gradle version.
-        gradle 'Gradle'
-    }
+    agent any
 
     stages {
         stage('Test') {
