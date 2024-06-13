@@ -1,10 +1,15 @@
 pipeline {
-    agent any
+    agent{label 'window'}
+
+    tools {
+        // Install the Gradle version.
+        gradle 'Gradle'
+    }
 
     stages {
         stage('Test') {
             steps {
-                bat "mvn -D clean verify"
+                sh './gradlew clean test --no-daemon' //run a gradle task
             }
 
             post {
